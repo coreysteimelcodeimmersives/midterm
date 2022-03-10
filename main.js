@@ -336,27 +336,25 @@ You can assume that every number in the array will be unique
 */
 
 function twoSmallest(arr){
-    let smallArr = [];
-    let smallNum = arr[0];
+    let largeNum = arr[0];
     if (arr.length < 2){
         return undefined;
+    } else if (arr.length === 2){
+        if (arr[0] < arr[1]){
+            return [arr[0], arr[1]];
+        } else {
+            return [arr[1], arr[0]];
+        }
     } else {
+        let largeNum = arr[0];
         for (let i = 1; i < arr.length; i++){
-            if (arr[i] < smallNum){
-                smallNum = arr[i];
+            if (arr[i] > largeNum){
+                largeNum = arr[i];
             }
         }
-        smallArr.push(smallNum);
-        arr.splice(arr.indexOf(smallNum),1);
-        smallNum = arr[0];
-        for (let i = 1; i < arr.length; i++){
-            if (arr[i] < smallNum){
-                smallNum = arr[i];
-            }
-        }
-        smallArr.push(smallNum);
+        arr.splice(arr.indexOf(largeNum),1);
+        return twoSmallest(arr);
     }
-    return smallArr;
 }
 
 /* console.logs to test */
@@ -364,8 +362,8 @@ console.log("twoSmallest");
 console.log("////////////////////////////////////////////////////////////////////////////\n");
 //Add console.logs here to test!  Feel free to format this section however you like
 
-// expect [-22, -10]
-let smallArr = [-5, 3, 9, -22, -1, 4, 8, -10];
+// expect [-23, -10]
+let smallArr = [-5, 3, 9, -23, -1, 4, 8, -10];
 console.log(twoSmallest(smallArr));
 
 // expect [3, 21]
@@ -384,5 +382,20 @@ console.log(twoSmallest(smallArr4));
 let smallArr5 = [88, 7, 11, 5, 3, 22, 0, 55, 2, 6, 1, -1, 101, 4];
 console.log(twoSmallest(smallArr5));
 
-console.log("\n////////////////////////////////////////////////////////////////////////////\n");
+// excpect undefined
+let emptyArr2 = [];
+console.log(twoSmallest(emptyArr2));
 
+// expect undefined
+let oneArr = [2];
+console.log(twoSmallest(oneArr));
+
+// expect [3, 4]
+let twoArr = [4,3];
+console.log(twoSmallest(twoArr));
+
+// expect [1,2];
+let twoArr2 = [1,2];
+console.log(twoSmallest(twoArr2));
+
+console.log("\n////////////////////////////////////////////////////////////////////////////\n");
